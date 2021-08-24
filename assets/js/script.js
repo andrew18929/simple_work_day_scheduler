@@ -1,72 +1,71 @@
-// NEED TO SET CURRENT DAY AND DISPLAY IT AT THE TOP OF THE CALENDAR
+// set current day and display it at the top of the calendar
 var timeEl = $("#currentDay");
-var currentTime;
+var currentDayAndTime;
 // call function to update clock
-updateClock();
+clockUpdater();
 // call loadTimeBlockData() function when page resets/opens
 loadTimeBlockData();
 
+// setInterval to constantly update time to make sure time blocks are colored correctly
+var currentClockTime = setInterval(clockUpdater, 1000)
 
-
-// NEED TO SETINTERVAL TO CONSTANTLY UPDATE TIME TO MAKE SURE TIME BLOCKS ARE COLORED CORRECTLY
-var currentClockTime = setInterval(updateClock, 1000)
-
-// NEED TO CREATE A FUNCTION TO SET CURRENT TIME AND CHECK TIME BLOCKS
-function updateClock() {
-    currentTime = moment().format('MMMM Do, YYYY');
-    timeEl.text(currentTime);
-    // function to check the time block
+//Set current time and coordinate with time blocks
+function clockUpdater(){
+    currentDayAndTime = moment();
+    timeEl.text(currentDayAndTime.format('MMMM Do, YYYY'));
     coordinateTimeBlocks();
 }
 
-// NEED TO CORRECTLY COLOR TIME BLOCKS TO COORDINATE WITH CURRENT TIME DISPLAYED ON TOP OF THE CALENDAR
+// correctly color time blocks to coordinate with current time displayed on top of the scheduler
 function coordinateTimeBlocks() {
-    var currentHour = currentTime.hours();
-    var timeBlock = $("#time-block");
-    for (var i = 0; i < timeBlock.length; i++) {
+    var currentHour = currentDayAndTime.hours();
+    var timeBlock = $(".time-block");
+    for(var i = 0; i < timeBlock.length; i++){
         var block = timeBlock[i];
-        if(parseInt(block.id.split("-")[0]) < currentHour) {
+        if(parseInt(block.id.split("-")[0]) < currentHour){
             $(block).addClass("past");
-        } else if (parseInt(block.id.split("-")[0]) === currentHour) {
+        }
+        else if(parseInt(block.id.split("-")[0]) === currentHour){
             $(block).removeClass("past");
             $(block).addClass("present");
-        } else {
+        }
+        else{
             $(block).removeClass("past");
             $(block).removeClass("present");
             $(block).addClass("future");
         }
     }
-} 
-
-
-// NEED TO CREATE LISTENER EVENT FOR SAVE BUTTON ON CLICK AND SAVE INPUT TO LOCAL STORAGE
-$(".saveBtn").on("click", saveClick);
-
-// SAVE INPUT TO LOCAL STORAGE BY CREATING A FUNCTION TO SAVE INFO
-function saveClick(event) {
-    var inputText = $(event.target).siblings(".description").val();
-    var scheduleTime = $(event.target).parent().attr("id");
-
-    if(text === "")
-        alert("Type text into the field to save it on the calendar")
-    else{
-        localStorage.setItem(time, text);
-        alert("Task has been saved");
-    }
 }
 
+// create a listener event for the save button on click 
+$(".saveBtn").on("click", saveClick);
 
-// NEED TO LOAD TIME BLOCK DATA FROM LOCAL STORAGE TO EACH COORDINATING TIME BLOCK
-function loadTimeBlockData() {
+//Save input to local storage by creating a function to save info
+function saveClick(event){
+    var inputText = $(event.target).siblings(".description").val();
+    var timeOfDay = $(event.target).parent().attr("id");
+
+    if(inputText === "")
+        alert("A task must be filled to save to your scheduler")
+    else{
+        localStorage.setItem(timeOfDay, inputText);
+        alert("Your task has been saved to your scheduler");
+    }
+
+}
+
+// load time block data from local storage to each coordinating time block
+function loadTimeBlockData(){ 
     $('#8 .description').val(localStorage.getItem('8'));
     $('#9 .description').val(localStorage.getItem('9'));
     $('#10 .description').val(localStorage.getItem('10'));
     $('#11 .description').val(localStorage.getItem('11'));
     $('#12 .description').val(localStorage.getItem('12'));
-    $('#1 .description').val(localStorage.getItem('1'));
-    $('#2 .description').val(localStorage.getItem('2'));
-    $('#3 .description').val(localStorage.getItem('3'));
-    $('#4 .description').val(localStorage.getItem('4'));
-    $('#5 .description').val(localStorage.getItem('5'));
-    $('#6 .description').val(localStorage.getItem('6'));
+    $('#13 .description').val(localStorage.getItem('13'));
+    $('#14 .description').val(localStorage.getItem('14'));
+    $('#15 .description').val(localStorage.getItem('15'));
+    $('#16 .description').val(localStorage.getItem('16'));
+    $('#17 .description').val(localStorage.getItem('17'));
+    $('#18 .description').val(localStorage.getItem('18'));
 }
+
