@@ -1,10 +1,22 @@
 // NEED TO SET CURRENT TIME AND DISPLAY IT AT THE TOP OF THE CALENDAR
-
+var timeEl = $("#currentDay");
+var currentTime;
+// call function to update clock
+updateClock();
 // NEED TO LOAD TIME BLOCK DATA WHEN PAGE IS OPENED TO SHOW STANDARD BUSINESS HOURS
 
+
+
+
 // NEED TO SETINTERVAL TO CONSTANTLY UPDATE TIME TO MAKE SURE TIME BLOCKS ARE COLORED CORRECTLY
+var currentClockTime = setInterval(updateClock, 1000)
 
 // NEED TO CREATE A FUNCTION TO SET CURRENT TIME AND CHECK TIME BLOCKS
+function updateClock() {
+    currentTime = moment().format('MMMM Do, YYYY');
+    timeEl.text(currentTime);
+    // function to check the time block
+}
 
 // NEED TO CORRECTLY COLOR TIME BLOCKS TO COORDINATE WITH CURRENT TIME DISPLAYED ON TOP OF THE CALENDAR
 
